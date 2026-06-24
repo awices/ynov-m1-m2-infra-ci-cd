@@ -11,9 +11,6 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
-env:
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -29,10 +26,10 @@ jobs:
     
     steps:
       - name: "Clonage du depot"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: "Configuration du Cache npm"
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.npm
           key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -57,7 +54,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
       - name: "Publication du Rapport de Tests"
-        uses: mikepenz/action-junit-report@v4
+        uses: mikepenz/action-junit-report@v6
         if: always()
         with:
           report_paths: '**/junit.xml'
