@@ -1,0 +1,8 @@
+creation_rules:
+  # Environnement de Développement : Chiffrement multi-destinataires (Dev + Ops peuvent lire)
+  - path_regex: secrets-dev\.yaml$
+    age: "age15sg7pgsxsp3058yjyg0tp2qnzrugx2x086n50fxry9ztcknlg92srn2xz5,age1hj4wa5tuhl09exwn4k8urs26mncn3cyraphjeg64evdffe9c6egqzv48me"
+
+  # Environnement de Production : Ségrégation stricte (Seul l'Ops/Pipeline peut lire)
+  - path_regex: secrets-prod\.yaml$
+    age: "age1hj4wa5tuhl09exwn4k8urs26mncn3cyraphjeg64evdffe9c6egqzv48me"

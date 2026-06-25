@@ -67,7 +67,37 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: "Simulation de Deploiement Securise"
+      - name: "Clonage du depot"
+        uses: actions/checkout@v5
+
+      # Verrouillage par Commit SHA au lieu d'un tag mutable
+      - name: "Installation de Mozilla SOPS via GitHub Action secrétisée"
+        uses: mdgreenwald/mozilla-sops-action@d9714e548238127f8d63a8a65f9737f5b35c4fc5 # Correspond à la release stable v1.6.0
+        with:
+          version: 'v3.9.0' # Version du binaire SOPS à installer sur le runner
+
+      - name: "Installation d'Age"
+        run: sudo apt-get update && sudo apt-get install -y age
+
+      - name: "Déchiffrement hermétique et Injection au Runtime"
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }} 
         run: |
+          # 1. Chargement de la clé privée de manière volatile en mémoire
+          mkdir -p ~/.config/sops/age
+          echo "$SOPS_AGE_KEY" > ~/.config/sops/age/keys.txt
+          export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+          
+          # 2. Déchiffrement à la volée en variables d'environnement
+          echo "Extraction sécurisée des configurations secrètes..."
+          eval $(sops decrypt --output-type env secrets-prod.yaml)
+          
+          # 3. Nettoyage immédiat pour empêcher la persistance de la clé sur le disque du runner
+          rm -rf ~/.config/sops/age/keys.txt
+          
+          # 4. Lancement simulé de l'application
+          echo "Démarrage du backend Node.js en production..."
+          # node app.js 
+          
           echo "Deploiement effectue avec succes sur l'environnement officiel."
           echo "Sous-environnement selectionne manuellement : ${{ github.event.inputs.target_sub_env }}"
