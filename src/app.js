@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const { exec } = require('child_process'); // Utilisé pour introduire une faille SAST
 
-const SIMULATED_AWS_KEY = "AKIAIOSFODNN7EXAMPLE";
+const SIMULATED_AWS_KEY = "AKIAIOSFODNN7TRUEMEB";
 
 const app = express();
 
