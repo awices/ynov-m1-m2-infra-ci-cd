@@ -1,0 +1,7 @@
+title = "MyCorp règles de sécurité"
+
+[[rules]]
+id = "corporate-api-token"
+description = "Détection des jetons d'accès privés de l'API MyCorp"
+regex = '(?i)mycorp_[a-z0-9]{24}' # Analyse insensible à la casse : préfixe + 24 caractères alphanumériques
+secretGroup = 0
