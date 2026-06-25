@@ -72,9 +72,9 @@ jobs:
 
       # Verrouillage par Commit SHA au lieu d'un tag mutable
       - name: "Installation de Mozilla SOPS via GitHub Action secrétisée"
-        uses: mdgreenwald/mozilla-sops-action@d9714e548238127f8d63a8a65f9737f5b35c4fc5 # Correspond à la release stable v1.6.0
+        uses: mdgreenwald/mozilla-sops-action@v2.1.0
         with:
-          version: 'v3.9.0' # Version du binaire SOPS à installer sur le runner
+          version: 'v3.13.1' # Version du binaire SOPS à installer sur le runner
 
       - name: "Installation d'Age"
         run: sudo apt-get update && sudo apt-get install -y age
